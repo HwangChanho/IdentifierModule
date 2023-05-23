@@ -12,7 +12,7 @@ class MainView: NSView {
     let infoLabel: Label = {
         let label = Label()
         
-        label.stringValue = "이곳에 파일을 드레그 하세요."
+        label.stringValue = NSLocalizedString("DragFileInfo", comment: "")
         label.textColor = .white
         
         return label
@@ -36,6 +36,14 @@ class MainView: NSView {
         return label
     }()
     
+    let identifierDetailLabel = Label()
+    let pathDetailLabel = Label()
+    let fileInfoLabel = Label()
+    
+    let languageComboBox = NSComboBox()
+    
+    var languages: [Language] = [.english, .korean]
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         
@@ -47,14 +55,34 @@ class MainView: NSView {
         
     }
     
+    func initTextInfo() {
+        identifierDetailLabel.setText("")
+        pathDetailLabel.setText("")
+        fileInfoLabel.setText("")
+    }
+    
     private func setDisplay() {
-        [dragView, identifierLabel, pathLabel].forEach {
+        languages.forEach {
+            languageComboBox.addItem(withObjectValue: $0.name)
+        }
+        
+        dragView.layer?.cornerRadius = 8
+        pathDetailLabel.textColor = .white
+        identifierDetailLabel.textColor = .white
+        languageComboBox.isEditable = false
+        
+        [dragView, identifierLabel, pathLabel, identifierDetailLabel, pathDetailLabel, fileInfoLabel, languageComboBox].forEach {
             self.addSubview($0)
         }
         
         dragView.addSubview(infoLabel)
         
-        dragView.layer?.cornerRadius = 8
+        languageComboBox.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-20)
+            make.width.equalTo(100)
+            make.height.equalTo(40)
+        }
         
         dragView.snp.makeConstraints { make in
             make.width.equalTo(200)
@@ -69,13 +97,33 @@ class MainView: NSView {
         }
         
         identifierLabel.snp.makeConstraints { make in
-            make.left.equalTo(dragView.snp.right).offset(50)
-            make.top.equalTo(dragView.snp.top).offset(50)
+            make.left.equalTo(dragView.snp.right).offset(20)
+            make.top.equalTo(dragView.snp.top).offset(20)
+            make.width.equalTo(identifierLabel.intrinsicContentSize)
+        }
+        
+        identifierDetailLabel.snp.makeConstraints { make in
+            make.top.equalTo(identifierLabel)
+            make.left.equalTo(identifierLabel.snp.right)
+            make.right.equalToSuperview().offset(-20)
         }
         
         pathLabel.snp.makeConstraints { make in
-            make.left.equalTo(dragView.snp.right).offset(50)
-            make.top.equalTo(identifierLabel.snp.bottom).offset(50)
+            make.left.equalTo(identifierLabel)
+            make.top.equalTo(identifierLabel.snp.bottom).offset(30)
+            make.width.equalTo(pathLabel.intrinsicContentSize)
+        }
+        
+        pathDetailLabel.snp.makeConstraints { make in
+            make.top.equalTo(pathLabel)
+            make.left.equalTo(pathLabel.snp.right)
+            make.right.equalTo(identifierDetailLabel)
+        }
+        
+        fileInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(pathDetailLabel.snp.bottom).offset(30)
+            make.left.equalTo(identifierLabel)
+            make.right.equalTo(identifierDetailLabel)
         }
     }
 }

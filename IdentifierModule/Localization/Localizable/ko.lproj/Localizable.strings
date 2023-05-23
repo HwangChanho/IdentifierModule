@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  IdentifierModule
+
+  Created by jiran_daniel on 2023/05/23.
+  
+*/
+
+"DragFileInfo" = "이곳에 파일을 드레그 하세요.";
