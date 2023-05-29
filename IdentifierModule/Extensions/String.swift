@@ -8,5 +8,9 @@
 import Foundation
 
 extension String {
-    
+    var isKR: Bool {
+        let koreanRegex = ".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", koreanRegex)
+        return predicate.evaluate(with: self)
+    }
 }

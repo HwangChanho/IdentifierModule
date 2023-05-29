@@ -42,6 +42,15 @@ class MainView: NSView {
     
     let languageComboBox = NSComboBox()
     
+    let textFieldInfoLabel = Label()
+    let searchTextField: NSTextField = {
+        let textField = NSTextField()
+        
+        textField.placeholderString = "EX:: /Application/PCFilter"
+        
+        return textField
+    }()
+    
     var languages: [Language] = [.english, .korean]
     
     override init(frame frameRect: NSRect) {
@@ -70,8 +79,9 @@ class MainView: NSView {
         pathDetailLabel.textColor = .white
         identifierDetailLabel.textColor = .white
         languageComboBox.isEditable = false
+        textFieldInfoLabel.setText("path ::")
         
-        [dragView, identifierLabel, pathLabel, identifierDetailLabel, pathDetailLabel, fileInfoLabel, languageComboBox].forEach {
+        [dragView, identifierLabel, pathLabel, identifierDetailLabel, pathDetailLabel, fileInfoLabel, languageComboBox, textFieldInfoLabel, textFieldInfoLabel, searchTextField].forEach {
             self.addSubview($0)
         }
         
@@ -124,6 +134,20 @@ class MainView: NSView {
             make.top.equalTo(pathDetailLabel.snp.bottom).offset(30)
             make.left.equalTo(identifierLabel)
             make.right.equalTo(identifierDetailLabel)
+        }
+        
+        textFieldInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(dragView.snp.bottom).offset(30)
+            make.left.equalTo(dragView)
+            make.height.equalTo(20)
+        }
+        
+        searchTextField.snp.makeConstraints { make in
+            make.left.equalTo(textFieldInfoLabel.snp.right).offset(20)
+            make.height.equalTo(20)
+            make.width.equalTo(150)
+            make.top.equalTo(textFieldInfoLabel.snp.top)
+//            make.centerY.equalTo(textFieldInfoLabel)
         }
     }
 }

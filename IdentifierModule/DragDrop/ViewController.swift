@@ -10,8 +10,9 @@ import SnapKit
 
 class ViewController: NSViewController {
     let mainView = MainView()
-    let manager = CommonUtil.shared
+    
     let localizationManager = LocalizationManager.shared
+    let fileManager = FileManagerUtil.shared
     
     override func loadView() {
         super.loadView()
@@ -23,13 +24,18 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setDelegate()
+    }
+    
+    private func setDelegate() {
         mainView.dragView.delegate = self
         mainView.languageComboBox.delegate = self
+        mainView.searchTextField.delegate = self
     }
 }
 
 // MARK: - NSComboBoxDelegate
-extension ViewController: NSComboBoxDelegate {
+extension ViewController: NSComboBoxDelegate, NSTextFieldDelegate {
     func comboBoxSelectionDidChange(_ notification: Notification) {
         if let comboBox = notification.object as? NSComboBox {
             guard let _ = comboBox.objectValueOfSelectedItem else { return }
@@ -40,16 +46,27 @@ extension ViewController: NSComboBoxDelegate {
             
             mainView.infoLabel.stringValue = test
             // UI 다시 리로딩 하는 부분
-//            mainView.setNeedsDisplay(mainView.bounds)
-//
-//            DispatchQueue.main.async {
-//                RunLoop.current.run(mode: .default, before: Date.distantFuture)
-//            }
-//
-            print(mainView.languages[comboBox.indexOfSelectedItem].code, test)
-            
-            //            applyLocalization()
+            //            mainView.setNeedsDisplay(mainView.bounds)
+            //
+            //            DispatchQueue.main.async {
+            //                RunLoop.current.run(mode: .default, before: Date.distantFuture)
+            //            }
+            //
         }
+    }
+    
+    func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
+        if fieldEditor.string.isKR {
+            NSApplication.shared.showAlert("한글은 검색이 불가합니다.")
+            return false
+        }
+        
+        guard let url = URL(string: fieldEditor.string) else { return false }
+        
+        fileManager.checkLocTest(withKeyword: fieldEditor.string)
+        getDetail(from: [url])
+    
+        return true
     }
 }
 

@@ -13,6 +13,8 @@
 		FBD8A0FA2A1C574900D883FC /* LanguageDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A0F92A1C574900D883FC /* LanguageDefinition.swift */; };
 		FBD8A0FD2A1C578600D883FC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A0FC2A1C578600D883FC /* String.swift */; };
 		FBD8A1042A1C746900D883FC /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A1032A1C746900D883FC /* LocaleManager.swift */; };
+		FBD8A10C2A1ED18500D883FC /* FileManagerUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A10B2A1ED18500D883FC /* FileManagerUtil.swift */; };
+		FBD8A10E2A1F22C100D883FC /* NSApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A10D2A1F22C100D883FC /* NSApplication.swift */; };
 		FBE9E6492A1B263500CCAC9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9E6482A1B263500CCAC9F /* AppDelegate.swift */; };
 		FBE9E64B2A1B263500CCAC9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9E64A2A1B263500CCAC9F /* ViewController.swift */; };
 		FBE9E64D2A1B263600CCAC9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBE9E64C2A1B263600CCAC9F /* Assets.xcassets */; };
@@ -22,7 +24,7 @@
 		FBE9E6672A1B263600CCAC9F /* IdentifierModuleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9E6662A1B263600CCAC9F /* IdentifierModuleUITestsLaunchTests.swift */; };
 		FBE9E6742A1B2BCB00CCAC9F /* DragView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9E6732A1B2BCB00CCAC9F /* DragView.swift */; };
 		FBE9E6772A1B2BF200CCAC9F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FBE9E6762A1B2BF200CCAC9F /* SnapKit */; };
-		FBE9E67A2A1B35C800CCAC9F /* CommonUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9E6792A1B35C800CCAC9F /* CommonUtil.swift */; };
+		FBE9E67A2A1B35C800CCAC9F /* ProcessUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE9E6792A1B35C800CCAC9F /* ProcessUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		FBD8A0FC2A1C578600D883FC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		FBD8A1032A1C746900D883FC /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
 		FBD8A1092A1C9AF700D883FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		FBD8A10B2A1ED18500D883FC /* FileManagerUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerUtil.swift; sourceTree = "<group>"; };
+		FBD8A10D2A1F22C100D883FC /* NSApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSApplication.swift; sourceTree = "<group>"; };
 		FBE9E6452A1B263500CCAC9F /* IdentifierModule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IdentifierModule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9E6482A1B263500CCAC9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBE9E64A2A1B263500CCAC9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,7 +67,7 @@
 		FBE9E6642A1B263600CCAC9F /* IdentifierModuleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModuleUITests.swift; sourceTree = "<group>"; };
 		FBE9E6662A1B263600CCAC9F /* IdentifierModuleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModuleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FBE9E6732A1B2BCB00CCAC9F /* DragView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragView.swift; sourceTree = "<group>"; };
-		FBE9E6792A1B35C800CCAC9F /* CommonUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUtil.swift; sourceTree = "<group>"; };
+		FBE9E6792A1B35C800CCAC9F /* ProcessUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				FBD8A0FC2A1C578600D883FC /* String.swift */,
+				FBD8A10D2A1F22C100D883FC /* NSApplication.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -132,6 +137,15 @@
 				FBD8A1032A1C746900D883FC /* LocaleManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		FBD8A10A2A1ED16900D883FC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FBE9E6792A1B35C800CCAC9F /* ProcessUtil.swift */,
+				FBD8A10B2A1ED18500D883FC /* FileManagerUtil.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		FBE9E63C2A1B263500CCAC9F = {
@@ -157,6 +171,7 @@
 		FBE9E6472A1B263500CCAC9F /* IdentifierModule */ = {
 			isa = PBXGroup;
 			children = (
+				FBD8A10A2A1ED16900D883FC /* Utils */,
 				FBD8A1022A1C745B00D883FC /* Managers */,
 				FBD8A0FB2A1C577C00D883FC /* Extensions */,
 				FBD8A0F62A1C568D00D883FC /* Localization */,
@@ -191,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				FBE9E64A2A1B263500CCAC9F /* ViewController.swift */,
-				FBE9E6792A1B35C800CCAC9F /* CommonUtil.swift */,
 				FBD8A0EC2A1B5B2100D883FC /* MainView.swift */,
 			);
 			path = DragDrop;
@@ -339,9 +353,11 @@
 				FBD8A1042A1C746900D883FC /* LocaleManager.swift in Sources */,
 				FBD8A0ED2A1B5B2100D883FC /* MainView.swift in Sources */,
 				FBE9E6492A1B263500CCAC9F /* AppDelegate.swift in Sources */,
-				FBE9E67A2A1B35C800CCAC9F /* CommonUtil.swift in Sources */,
+				FBE9E67A2A1B35C800CCAC9F /* ProcessUtil.swift in Sources */,
 				FBD8A0EB2A1B598800D883FC /* Label.swift in Sources */,
 				FBD8A0FA2A1C574900D883FC /* LanguageDefinition.swift in Sources */,
+				FBD8A10C2A1ED18500D883FC /* FileManagerUtil.swift in Sources */,
+				FBD8A10E2A1F22C100D883FC /* NSApplication.swift in Sources */,
 				FBD8A0FD2A1C578600D883FC /* String.swift in Sources */,
 				FBE9E6742A1B2BCB00CCAC9F /* DragView.swift in Sources */,
 			);

@@ -8,8 +8,8 @@
 import Foundation
 import AppKit
 
-class CommonUtil: NSObject {
-    static let shared = CommonUtil()
+class ProcessUtil: NSObject {
+    static let shared = ProcessUtil()
     private override init() {}
     
     func getProdIdentifier(_ pid: pid_t) -> NSString? {
