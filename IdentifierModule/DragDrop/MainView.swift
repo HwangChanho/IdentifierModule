@@ -145,7 +145,7 @@ class MainView: NSView {
         searchTextField.snp.makeConstraints { make in
             make.left.equalTo(textFieldInfoLabel.snp.right).offset(20)
             make.height.equalTo(20)
-            make.width.equalTo(150)
+            make.width.equalTo(250)
             make.top.equalTo(textFieldInfoLabel.snp.top)
 //            make.centerY.equalTo(textFieldInfoLabel)
         }

@@ -63,7 +63,6 @@ extension ViewController: NSComboBoxDelegate, NSTextFieldDelegate {
         
         guard let url = URL(string: fieldEditor.string) else { return false }
         
-        fileManager.checkLocTest(withKeyword: fieldEditor.string)
         getDetail(from: [url])
     
         return true
@@ -85,19 +84,13 @@ extension ViewController: DragDelegate {
             let absolutePath = url.path
             mainView.pathDetailLabel.setText(absolutePath)
             
-            if let bundle = Bundle(path: url.path) {
-                if let bundleIdentifier = bundle.bundleIdentifier {
-                    mainView.identifierDetailLabel.setText(bundleIdentifier)
-                    
-                    let runningApplications = NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier)
-                    if let pid = runningApplications.first?.processIdentifier {
-                        print("Process ID (PID): \(pid)")
-                    }
-                }
-            }
+            let identifier = fileManager.getBundleIdentifier(URL(string: url.path)!)
+            mainView.identifierDetailLabel.setText(identifier)
+            
             
             if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) {
                 if isDirectory.boolValue {
+                    mainView.fileInfoLabel.setText("Folder :: \(url.path)")
                 } else {
                     var text: String = ""
                     text += "File Path: \(url.path)\n"
@@ -108,13 +101,14 @@ extension ViewController: DragDelegate {
                             text += "File Size: \(fileSize) bytes\n"
                         }
                         if let creationDate = fileAttributes[.creationDate] as? Date {
-                            text += "Creation Date: \(creationDate)\n"
+                            text += "Creation Date: \(creationDate.toyyyyMMdd)\n"
                         }
                         if let modificationDate = fileAttributes[.modificationDate] as? Date {
-                            text += "Modification Date: \(modificationDate)\n"
+                            text += "Modification Date: \(modificationDate.toyyyyMMdd)\n"
                         }
                         
                         mainView.fileInfoLabel.setText(text)
+                        
                     } catch {
                         print("Failed to retrieve file attributes: \(error)")
                     }

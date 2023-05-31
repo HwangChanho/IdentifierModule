@@ -14,3 +14,11 @@ extension String {
         return predicate.evaluate(with: self)
     }
 }
+
+extension Date {
+    var toyyyyMMdd: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: self)
+    }
+}
