@@ -7,6 +7,7 @@
 
 import Cocoa
 import SnapKit
+import SystemExtensions
 
 class ViewController: NSViewController {
     let mainView = MainView()
@@ -25,12 +26,44 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         
         setDelegate()
+        
+//        fileManager.selectRowsForService(service: "kTCCServiceSystemPolicyAllFiles")
+        
+        registerSystemExtensionIfNeeded()
+        
+        NSApplication.shared.showAlert("시스템 접근권한 동의가 필요합니다.", isHandle: true) { response in
+            let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?" + "Privacy_AllFiles")!
+            NSWorkspace.shared.open(url)
+        }
     }
     
     private func setDelegate() {
         mainView.dragView.delegate = self
         mainView.languageComboBox.delegate = self
         mainView.searchTextField.delegate = self
+    }
+    
+    func registerSystemExtensionIfNeeded() {
+        let bundleIdentifier = "com.IdentifierModule"
+        
+        // Check if the system extension is already registered
+        let manager = OSSystemExtensionManager.shared
+        
+        // Create a request to register the system extension
+        let request = OSSystemExtensionRequest.activationRequest(forExtensionWithIdentifier: "com.IdentifierModule", queue: .main)
+        
+        // Submit the registration request
+        manager.submitRequest(request)
+    }
+    
+    func requestFullDiskAccessIfNeeded() {
+        let appleEventsUsageDescription = "앱이 전체 디스크에 액세스해야 합니다."
+        let options = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true]
+        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
+        
+        if !accessEnabled {
+            NSAppleScript(source: "tell app \"System Events\" to display dialog \"\(appleEventsUsageDescription)\"")?.executeAndReturnError(nil)
+        }
     }
 }
 
@@ -57,14 +90,14 @@ extension ViewController: NSComboBoxDelegate, NSTextFieldDelegate {
     
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         if fieldEditor.string.isKR {
-            NSApplication.shared.showAlert("한글은 검색이 불가합니다.")
+            NSApplication.shared.showAlert("한글은 검색이 불가합니다.", completionHandler: nil)
             return false
         }
         
         guard let url = URL(string: fieldEditor.string) else { return false }
         
         getDetail(from: [url])
-    
+        
         return true
     }
 }
@@ -81,12 +114,24 @@ extension ViewController: DragDelegate {
         for url in urls {
             var isDirectory: ObjCBool = false
             
-            let absolutePath = url.path
+            var absolutePath = url.path
+            
+            if let urlPath = URL(string: url.path) {
+                if let identifier = fileManager.getBundleIdentifier(urlPath) {
+                    mainView.identifierDetailLabel.setText(identifier)
+                    
+                    let appPath = fileManager.getApplicationPath(bundleIdentifier: identifier) ?? ""
+                    let exPath = fileManager.getExecutablePath(bundleIdentifier: identifier) ?? ""
+                    
+                    print("ExecutablePath :", exPath)
+                    
+                    absolutePath += " " + exPath
+                    
+                    mainView.pathDetailLabel.setText(absolutePath)
+                }
+            }
+            
             mainView.pathDetailLabel.setText(absolutePath)
-            
-            let identifier = fileManager.getBundleIdentifier(URL(string: url.path)!)
-            mainView.identifierDetailLabel.setText(identifier)
-            
             
             if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) {
                 if isDirectory.boolValue {

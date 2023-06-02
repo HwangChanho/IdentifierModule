@@ -7,6 +7,7 @@
 
 import Foundation
 import AppKit
+import SQLite3
 
 enum UnderRootDir: CaseIterable {
     case root
@@ -53,17 +54,131 @@ class FileManagerUtil: NSObject {
     let fileManager = FileManager.default
     let workspace = NSWorkspace.shared
     
+    let TCCLoc = "/Library/Application Support/com.apple.TCC/TCC.db"
+    let rootLoc = "root"
+    
+    func getCurrentProjectName() -> String? {
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+            return nil
+        }
+        
+        let components = bundleIdentifier.components(separatedBy: ".")
+        if let projectName = components.last {
+            return projectName
+        }
+        
+        return nil
+    }
+    
+    func selectRowsForService(service: String) {
+        // TCC.db 파일 경로
+        let tccDBPath = "\(NSHomeDirectory())/Library/Application Support/com.apple.TCC/TCC.db"
+        let escapedPath = tccDBPath.replacingOccurrences(of: " ", with: "\\ ")
+
+        // SQLite3 데이터베이스 핸들 생성
+        var db: OpaquePointer?
+        
+        if sqlite3_open(tccDBPath, &db) == SQLITE_OK {
+            // SQL 쿼리문
+            let query = "SELECT * FROM access WHERE service = ?;"
+
+            // SQL 스테이먼트 생성
+            var statement: OpaquePointer?
+            
+            if sqlite3_prepare_v2(db, query, -1, &statement, nil) == SQLITE_OK {
+                // 매개변수 바인딩
+                sqlite3_bind_text(statement, 1, (service as NSString).utf8String, -1, nil)
+                
+                // 결과 조회
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    // 각 컬럼의 데이터 가져오기
+                    print("in")
+                    print(sqlite3_column_count(statement))
+                    
+                    for column in 0..<sqlite3_column_count(statement) {
+                        if let columnName = sqlite3_column_name(statement, column) {
+                            let columnNameString = String(cString: columnName)
+                            if let columnValue = sqlite3_column_text(statement, column) {
+                                let columnValueString = String(cString: columnValue)
+                                print("\(columnNameString): \(columnValueString)")
+                            }
+                        }
+                    }
+                    print("---")
+                }
+            } else {
+                let errorMessage = String(cString: sqlite3_errmsg(db))
+                print("SQL 스테이먼트 생성에 실패했습니다. 오류 메시지: \(errorMessage)")
+            }
+
+            // 스테이먼트 해제
+            sqlite3_finalize(statement)
+
+            // 데이터베이스 연결 종료
+            sqlite3_close(db)
+        } else {
+            let errorMessage = String(cString: sqlite3_errmsg(db))
+            print("TCC.db 파일 열기에 실패했습니다. 오류 메시지: \(errorMessage)")
+        }
+    }
+    
+    func insertIntoTccTable(service: String, client: String, clientType: Int, authValue: Int, authReason: Int, authVersion: Int) -> Bool {
+        var db: OpaquePointer?
+        
+        let dbPath = "\(NSHomeDirectory())/Library/Application Support/com.apple.TCC/TCC.db" // SQLite 데이터베이스 파일 경로
+        //        let escapedPath = dbPath.replacingOccurrences(of: " ", with: "\\ ")
+        
+        if sqlite3_open(dbPath, &db) == SQLITE_OK {
+            let insertStatementString = "INSERT into access (service, client, client_type, auth_value, auth_reason, auth_version) VALUES (?, ?, ?, ?, ?, ?)"
+            
+//            "INSERT INTO access (service, client, client_type, allowed, prompt_count, csreq, policy_id) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            
+            var insertStatement: OpaquePointer?
+            
+            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
+                sqlite3_bind_text(insertStatement, 1, service, -1, nil)
+                sqlite3_bind_text(insertStatement, 2, client, -1, nil)
+                sqlite3_bind_int(insertStatement, 3, Int32(clientType))
+                sqlite3_bind_int(insertStatement, 4, Int32(authValue))
+                sqlite3_bind_int(insertStatement, 5, Int32(authReason))
+                sqlite3_bind_int(insertStatement, 6, Int32(authVersion))
+//                sqlite3_bind_int(insertStatement, 7, Int32(authVersion))
+                
+                if sqlite3_step(insertStatement) == SQLITE_DONE {
+                    print("INSERT operation completed successfully.")
+                    
+                    return true
+                } else {
+                    let errorMessage = String(cString: sqlite3_errmsg(db))
+                    print("Failed to execute INSERT statement. Error: \(errorMessage)")
+                }
+            } else {
+                let errorMessage = String(cString: sqlite3_errmsg(db))
+                print("Error in preparing INSERT statement. Error: \(errorMessage)")
+            }
+            
+            sqlite3_finalize(insertStatement)
+        } else {
+            let errorMessage = String(cString: sqlite3_errmsg(db))
+            print("Failed to open database. Error: \(errorMessage)")
+        }
+        
+        sqlite3_close(db)
+        
+        return false
+    }
+    
     func openDirectory(_ directoryURL: URL) {
         if fileManager.fileExists(atPath: directoryURL.path) {
             workspace.open(directoryURL)
         } else {
-            NSApplication.shared.showAlert("Directory not found at the specified path.")
+            NSApplication.shared.showAlert("Directory not found at the specified path.", completionHandler: nil)
         }
         
-//        let runningApplications = NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier)
-//        if let pid = runningApplications.first?.processIdentifier {
-//            print("Process ID (PID): \(pid)")
-//        }
+        //        let runningApplications = NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier)
+        //        if let pid = runningApplications.first?.processIdentifier {
+        //            print("Process ID (PID): \(pid)")
+        //        }
     }
     
     func checkLocTest(withKeyword keyword: String) {
@@ -77,15 +192,15 @@ class FileManagerUtil: NSObject {
         }
     }
     
-    func getBundleIdentifier(_ url: URL) -> String {
+    func getBundleIdentifier(_ url: URL) -> String? {
         if let bundle = Bundle(path: url.path) {
             if let bundleIdentifier = bundle.bundleIdentifier {
                 return bundleIdentifier
             } else {
-                return "No Identifier"
+                return nil
             }
         } else {
-            return "File or Directory"
+            return nil
         }
     }
     
@@ -100,7 +215,7 @@ class FileManagerUtil: NSObject {
         print("1: ", getApplicationPath(bundleIdentifier: bundleIdentifier))
         print("2: ", getExecutablePath(bundleIdentifier: bundleIdentifier))
         
-//        workspace.open(url)
+        //        workspace.open(url)
     }
     
     func openFolderAndFile(atPath path: String) {
@@ -131,7 +246,7 @@ class FileManagerUtil: NSObject {
         
         print(searchURL)
         
-        openApplication(withBundleIdentifier: getBundleIdentifier(searchURL))
+        openApplication(withBundleIdentifier: getBundleIdentifier(searchURL)!)
         do {
             // Get the contents of the directory at the given path
             let contents = try fileManager.contentsOfDirectory(at: searchURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
@@ -171,9 +286,9 @@ class FileManagerUtil: NSObject {
     }
     
     
-    func getApplicationPath(bundleIdentifier: String) -> URL? {
+    func getApplicationPath(bundleIdentifier: String) -> String? {
         if let appPath = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleIdentifier) {
-            return appPath
+            return appPath.path
         }
         return nil
     }
@@ -185,7 +300,7 @@ class FileManagerUtil: NSObject {
                 let strURL = try String(contentsOf: appPath)
                 let appBundle = Bundle(path: strURL)
                 let executablePath = appBundle?.executablePath
-                 
+                
                 return executablePath
             } catch {
                 print("convert Url to String Error", error)
@@ -193,7 +308,7 @@ class FileManagerUtil: NSObject {
                 return nil
             }
         }
-           
+        
         return nil
     }
 }

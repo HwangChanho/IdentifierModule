@@ -60,7 +60,6 @@
 		FBE9E64A2A1B263500CCAC9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FBE9E64C2A1B263600CCAC9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBE9E64F2A1B263600CCAC9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FBE9E6512A1B263600CCAC9F /* IdentifierModule.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IdentifierModule.entitlements; sourceTree = "<group>"; };
 		FBE9E6562A1B263600CCAC9F /* IdentifierModuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IdentifierModuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBE9E65A2A1B263600CCAC9F /* IdentifierModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModuleTests.swift; sourceTree = "<group>"; };
 		FBE9E6602A1B263600CCAC9F /* IdentifierModuleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IdentifierModuleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +67,7 @@
 		FBE9E6662A1B263600CCAC9F /* IdentifierModuleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierModuleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FBE9E6732A1B2BCB00CCAC9F /* DragView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragView.swift; sourceTree = "<group>"; };
 		FBE9E6792A1B35C800CCAC9F /* ProcessUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessUtil.swift; sourceTree = "<group>"; };
+		FBF9A3F62A288A6B0048CC84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +171,7 @@
 		FBE9E6472A1B263500CCAC9F /* IdentifierModule */ = {
 			isa = PBXGroup;
 			children = (
+				FBF9A3F62A288A6B0048CC84 /* Info.plist */,
 				FBD8A10A2A1ED16900D883FC /* Utils */,
 				FBD8A1022A1C745B00D883FC /* Managers */,
 				FBD8A0FB2A1C577C00D883FC /* Extensions */,
@@ -180,7 +181,6 @@
 				FBE9E6482A1B263500CCAC9F /* AppDelegate.swift */,
 				FBE9E64C2A1B263600CCAC9F /* Assets.xcassets */,
 				FBE9E64E2A1B263600CCAC9F /* Main.storyboard */,
-				FBE9E6512A1B263600CCAC9F /* IdentifierModule.entitlements */,
 			);
 			path = IdentifierModule;
 			sourceTree = "<group>";
@@ -537,23 +537,25 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = IdentifierModule/IdentifierModule.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QUVU2PY6PG;
+				DEVELOPMENT_TEAM = 5GQ5L55Y79;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IdentifierModule/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "End Point Protection Extension ";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PFEndPointSecurityAppTemp.IdentifierModule;
+				PRODUCT_BUNDLE_IDENTIFIER = com.IdentifierModule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -565,23 +567,25 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = IdentifierModule/IdentifierModule.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QUVU2PY6PG;
+				DEVELOPMENT_TEAM = 5GQ5L55Y79;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IdentifierModule/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "End Point Protection Extension ";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PFEndPointSecurityAppTemp.IdentifierModule;
+				PRODUCT_BUNDLE_IDENTIFIER = com.IdentifierModule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
