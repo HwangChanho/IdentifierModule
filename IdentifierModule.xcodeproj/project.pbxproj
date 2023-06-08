@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB8F12EB2A300CFE009D5259 /* Sqlite3Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F12EA2A300CFE009D5259 /* Sqlite3Util.swift */; };
+		FB8F13912A31BE0B009D5259 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13902A31BE0B009D5259 /* main.swift */; };
+		FB8F139A2A31BE2E009D5259 /* JDFDAUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13982A31BE2E009D5259 /* JDFDAUtil.mm */; };
+		FB8F139B2A31BE2E009D5259 /* JDFDAUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13992A31BE2E009D5259 /* JDFDAUtil.swift */; };
+		FB8F139D2A31BE90009D5259 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8F139C2A31BE90009D5259 /* Foundation.framework */; };
+		FB8F13A32A31C021009D5259 /* JDFDAUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13A22A31C021009D5259 /* JDFDAUtil.cpp */; };
 		FBD8A0EB2A1B598800D883FC /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A0EA2A1B598800D883FC /* Label.swift */; };
 		FBD8A0ED2A1B5B2100D883FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A0EC2A1B5B2100D883FC /* MainView.swift */; };
 		FBD8A0F22A1C557A00D883FC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBD8A0F42A1C557A00D883FC /* Localizable.strings */; };
@@ -44,7 +50,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FB8F138C2A31BE0B009D5259 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		FB8F12EA2A300CFE009D5259 /* Sqlite3Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3Util.swift; sourceTree = "<group>"; };
+		FB8F138E2A31BE0B009D5259 /* FDAlib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FDAlib; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB8F13902A31BE0B009D5259 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		FB8F13952A31BE2D009D5259 /* FDAlib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FDAlib-Bridging-Header.h"; sourceTree = "<group>"; };
+		FB8F13962A31BE2E009D5259 /* JDFDAUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JDFDAUtil.hpp; sourceTree = "<group>"; };
+		FB8F13972A31BE2E009D5259 /* JDFDAUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDFDAUtil.h; sourceTree = "<group>"; };
+		FB8F13982A31BE2E009D5259 /* JDFDAUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JDFDAUtil.mm; sourceTree = "<group>"; };
+		FB8F13992A31BE2E009D5259 /* JDFDAUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDFDAUtil.swift; sourceTree = "<group>"; };
+		FB8F139C2A31BE90009D5259 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FB8F13A22A31C021009D5259 /* JDFDAUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = JDFDAUtil.cpp; sourceTree = "<group>"; };
 		FBD8A0EA2A1B598800D883FC /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		FBD8A0EC2A1B5B2100D883FC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		FBD8A0F32A1C557A00D883FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -68,9 +96,18 @@
 		FBE9E6732A1B2BCB00CCAC9F /* DragView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragView.swift; sourceTree = "<group>"; };
 		FBE9E6792A1B35C800CCAC9F /* ProcessUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessUtil.swift; sourceTree = "<group>"; };
 		FBF9A3F62A288A6B0048CC84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FBFFCE2A2A2C2AD100787EC9 /* libPoint.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libPoint.dylib; path = ../dylibTest/dylibTest/libPoint.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FB8F138B2A31BE0B009D5259 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB8F139D2A31BE90009D5259 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBE9E6422A1B263500CCAC9F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -96,6 +133,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB8F138F2A31BE0B009D5259 /* FDAlib */ = {
+			isa = PBXGroup;
+			children = (
+				FB8F13972A31BE2E009D5259 /* JDFDAUtil.h */,
+				FB8F13962A31BE2E009D5259 /* JDFDAUtil.hpp */,
+				FB8F13982A31BE2E009D5259 /* JDFDAUtil.mm */,
+				FB8F13992A31BE2E009D5259 /* JDFDAUtil.swift */,
+				FB8F13902A31BE0B009D5259 /* main.swift */,
+				FB8F13952A31BE2D009D5259 /* FDAlib-Bridging-Header.h */,
+				FB8F13A22A31C021009D5259 /* JDFDAUtil.cpp */,
+			);
+			path = FDAlib;
+			sourceTree = "<group>";
+		};
 		FBD8A0E92A1B598000D883FC /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +195,7 @@
 			children = (
 				FBE9E6792A1B35C800CCAC9F /* ProcessUtil.swift */,
 				FBD8A10B2A1ED18500D883FC /* FileManagerUtil.swift */,
+				FB8F12EA2A300CFE009D5259 /* Sqlite3Util.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -154,7 +206,9 @@
 				FBE9E6472A1B263500CCAC9F /* IdentifierModule */,
 				FBE9E6592A1B263600CCAC9F /* IdentifierModuleTests */,
 				FBE9E6632A1B263600CCAC9F /* IdentifierModuleUITests */,
+				FB8F138F2A31BE0B009D5259 /* FDAlib */,
 				FBE9E6462A1B263500CCAC9F /* Products */,
+				FBFFCE292A2C2AD100787EC9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,6 +218,7 @@
 				FBE9E6452A1B263500CCAC9F /* IdentifierModule.app */,
 				FBE9E6562A1B263600CCAC9F /* IdentifierModuleTests.xctest */,
 				FBE9E6602A1B263600CCAC9F /* IdentifierModuleUITests.xctest */,
+				FB8F138E2A31BE0B009D5259 /* FDAlib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,9 +266,35 @@
 			path = DragDrop;
 			sourceTree = "<group>";
 		};
+		FBFFCE292A2C2AD100787EC9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB8F139C2A31BE90009D5259 /* Foundation.framework */,
+				FBFFCE2A2A2C2AD100787EC9 /* libPoint.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FB8F138D2A31BE0B009D5259 /* FDAlib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB8F13942A31BE0B009D5259 /* Build configuration list for PBXNativeTarget "FDAlib" */;
+			buildPhases = (
+				FB8F138A2A31BE0B009D5259 /* Sources */,
+				FB8F138B2A31BE0B009D5259 /* Frameworks */,
+				FB8F138C2A31BE0B009D5259 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FDAlib;
+			productName = FDAlib;
+			productReference = FB8F138E2A31BE0B009D5259 /* FDAlib */;
+			productType = "com.apple.product-type.tool";
+		};
 		FBE9E6442A1B263500CCAC9F /* IdentifierModule */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBE9E66A2A1B263600CCAC9F /* Build configuration list for PBXNativeTarget "IdentifierModule" */;
@@ -280,6 +361,10 @@
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					FB8F138D2A31BE0B009D5259 = {
+						CreatedOnToolsVersion = 14.3.1;
+						LastSwiftMigration = 1430;
+					};
 					FBE9E6442A1B263500CCAC9F = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -313,6 +398,7 @@
 				FBE9E6442A1B263500CCAC9F /* IdentifierModule */,
 				FBE9E6552A1B263600CCAC9F /* IdentifierModuleTests */,
 				FBE9E65F2A1B263600CCAC9F /* IdentifierModuleUITests */,
+				FB8F138D2A31BE0B009D5259 /* FDAlib */,
 			);
 		};
 /* End PBXProject section */
@@ -345,11 +431,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FB8F138A2A31BE0B009D5259 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB8F139B2A31BE2E009D5259 /* JDFDAUtil.swift in Sources */,
+				FB8F13A32A31C021009D5259 /* JDFDAUtil.cpp in Sources */,
+				FB8F13912A31BE0B009D5259 /* main.swift in Sources */,
+				FB8F139A2A31BE2E009D5259 /* JDFDAUtil.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBE9E6412A1B263500CCAC9F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FBE9E64B2A1B263500CCAC9F /* ViewController.swift in Sources */,
+				FB8F12EB2A300CFE009D5259 /* Sqlite3Util.swift in Sources */,
 				FBD8A1042A1C746900D883FC /* LocaleManager.swift in Sources */,
 				FBD8A0ED2A1B5B2100D883FC /* MainView.swift in Sources */,
 				FBE9E6492A1B263500CCAC9F /* AppDelegate.swift in Sources */,
@@ -417,6 +515,39 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FB8F13922A31BE0B009D5259 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7N39VX8969;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACH_O_TYPE = mh_dylib;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FDAlib/FDAlib-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FB8F13932A31BE0B009D5259 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7N39VX8969;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACH_O_TYPE = mh_dylib;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FDAlib/FDAlib-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		FBE9E6682A1B263600CCAC9F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -667,6 +798,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FB8F13942A31BE0B009D5259 /* Build configuration list for PBXNativeTarget "FDAlib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB8F13922A31BE0B009D5259 /* Debug */,
+				FB8F13932A31BE0B009D5259 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FBE9E6402A1B263500CCAC9F /* Build configuration list for PBXProject "IdentifierModule" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
