@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB27F3D82A31CBD100B781F1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB27F3D72A31CBD100B781F1 /* Cocoa.framework */; };
+		FB27F3D92A31CBE800B781F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8F139C2A31BE90009D5259 /* Foundation.framework */; };
 		FB8F12EB2A300CFE009D5259 /* Sqlite3Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F12EA2A300CFE009D5259 /* Sqlite3Util.swift */; };
 		FB8F13912A31BE0B009D5259 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13902A31BE0B009D5259 /* main.swift */; };
 		FB8F139A2A31BE2E009D5259 /* JDFDAUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13982A31BE2E009D5259 /* JDFDAUtil.mm */; };
 		FB8F139B2A31BE2E009D5259 /* JDFDAUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13992A31BE2E009D5259 /* JDFDAUtil.swift */; };
-		FB8F139D2A31BE90009D5259 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8F139C2A31BE90009D5259 /* Foundation.framework */; };
 		FB8F13A32A31C021009D5259 /* JDFDAUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB8F13A22A31C021009D5259 /* JDFDAUtil.cpp */; };
 		FBD8A0EB2A1B598800D883FC /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A0EA2A1B598800D883FC /* Label.swift */; };
 		FBD8A0ED2A1B5B2100D883FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD8A0EC2A1B5B2100D883FC /* MainView.swift */; };
@@ -63,12 +64,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FB27F3D72A31CBD100B781F1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FB8F12EA2A300CFE009D5259 /* Sqlite3Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3Util.swift; sourceTree = "<group>"; };
 		FB8F138E2A31BE0B009D5259 /* FDAlib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FDAlib; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8F13902A31BE0B009D5259 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		FB8F13952A31BE2D009D5259 /* FDAlib-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FDAlib-Bridging-Header.h"; sourceTree = "<group>"; };
-		FB8F13962A31BE2E009D5259 /* JDFDAUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JDFDAUtil.hpp; sourceTree = "<group>"; };
-		FB8F13972A31BE2E009D5259 /* JDFDAUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDFDAUtil.h; sourceTree = "<group>"; };
+		FB8F13962A31BE2E009D5259 /* JDFDAUtilCpp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JDFDAUtilCpp.hpp; sourceTree = "<group>"; };
 		FB8F13982A31BE2E009D5259 /* JDFDAUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JDFDAUtil.mm; sourceTree = "<group>"; };
 		FB8F13992A31BE2E009D5259 /* JDFDAUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDFDAUtil.swift; sourceTree = "<group>"; };
 		FB8F139C2A31BE90009D5259 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -104,7 +105,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB8F139D2A31BE90009D5259 /* Foundation.framework in Frameworks */,
+				FB27F3D92A31CBE800B781F1 /* Foundation.framework in Frameworks */,
+				FB27F3D82A31CBD100B781F1 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +138,7 @@
 		FB8F138F2A31BE0B009D5259 /* FDAlib */ = {
 			isa = PBXGroup;
 			children = (
-				FB8F13972A31BE2E009D5259 /* JDFDAUtil.h */,
-				FB8F13962A31BE2E009D5259 /* JDFDAUtil.hpp */,
+				FB8F13962A31BE2E009D5259 /* JDFDAUtilCpp.hpp */,
 				FB8F13982A31BE2E009D5259 /* JDFDAUtil.mm */,
 				FB8F13992A31BE2E009D5259 /* JDFDAUtil.swift */,
 				FB8F13902A31BE0B009D5259 /* main.swift */,
@@ -269,6 +270,7 @@
 		FBFFCE292A2C2AD100787EC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB27F3D72A31CBD100B781F1 /* Cocoa.framework */,
 				FB8F139C2A31BE90009D5259 /* Foundation.framework */,
 				FBFFCE2A2A2C2AD100787EC9 /* libPoint.dylib */,
 			);
