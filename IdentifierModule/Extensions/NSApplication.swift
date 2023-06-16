@@ -14,6 +14,11 @@ extension NSApplication {
         alert.messageText = text
         alert.addButton(withTitle: "confirm")
         alert.alertStyle = style
+        alert.icon = .none
+        
+//        let customView = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: 0))
+//        customView.isHidden = true
+//        alert.accessoryView = customView
         
         let window = alert.window
         let screenFrame = NSScreen.main?.visibleFrame ?? NSZeroRect

@@ -12,7 +12,7 @@ class ProcessUtil: NSObject {
     static let shared = ProcessUtil()
     private override init() {}
     
-    func getProdIdentifier(_ pid: pid_t) -> NSString? {
+    func getProcIdentifier(_ pid: pid_t) -> NSString? {
         guard let strProcessPath = getProcessPath(for: pid) else { return nil }
         
         let urlPath = NSURL(string: strProcessPath)
@@ -39,7 +39,7 @@ class ProcessUtil: NSObject {
     func getProcessPath(for processID: pid_t) -> String? {
         print(#function)
         let process = Process()
-        process.launchPath = "/bin/ps"
+        process.launchPath = "/bin/ps" // 정상적인 프로세스인지 체크 해야한다 안할경우 악성코드를 실행할 여지도 있다.
         process.arguments = ["-p", "\(processID)", "-o", "comm="]
         
         let pipe = Pipe()

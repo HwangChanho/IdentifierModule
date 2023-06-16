@@ -5,9 +5,12 @@
 //  Created by jiran_daniel on 2023/05/25.
 //
 
-import Foundation
 import AppKit
+import Foundation
 import SQLite3
+
+// MARK: - 스냅킷
+import SnapKit
 
 enum UnderRootDir: CaseIterable {
     case root

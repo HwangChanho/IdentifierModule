@@ -51,7 +51,7 @@ class JDFDAUtil: NSObject {
         
         if sqlite3_open(TCCLoc, &db) == SQLITE_OK {
             let query = "SELECT * FROM access WHERE service='\(service.rawValue)' AND client='\(identifierOrPath!)';"
-
+            
             print("query :: ", query)
             var statement: OpaquePointer?
             
@@ -83,7 +83,7 @@ class JDFDAUtil: NSObject {
                 let errorMessage = String(cString: sqlite3_errmsg(db))
                 return (.error, "SQL 스테이먼트 생성에 실패했습니다. 오류 메시지: \(errorMessage)", nil)
             }
-
+            
             sqlite3_finalize(statement)
             sqlite3_close(db)
             
@@ -94,16 +94,12 @@ class JDFDAUtil: NSObject {
         }
     }
     
-    func selectRowsForServiceAll(service: KTCServices, identifierOrPath: String?) -> (FDAStatus, String?, AuthValueStatus?) {
-        guard identifierOrPath != nil else {
-            return (.error, "조회 대상이 없습니다.", nil)
-        }
-        
+    func selectRowsForServiceAll(service: KTCServices) -> (FDAStatus, String?, AuthValueStatus?) {
         var db: OpaquePointer?
         
         if sqlite3_open(TCCLoc, &db) == SQLITE_OK {
-            let query = "SELECT * FROM access WHERE service='\(service.rawValue)' AND client='\(identifierOrPath!)';"
-
+            let query = "SELECT * FROM access WHERE service='\(service.rawValue)';"
+            
             print("query :: ", query)
             var statement: OpaquePointer?
             
@@ -128,7 +124,7 @@ class JDFDAUtil: NSObject {
                 let errorMessage = String(cString: sqlite3_errmsg(db))
                 return (.error, "SQL 스테이먼트 생성에 실패했습니다. 오류 메시지: \(errorMessage)", nil)
             }
-
+            
             sqlite3_finalize(statement)
             sqlite3_close(db)
             

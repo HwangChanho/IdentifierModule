@@ -4,93 +4,33 @@
 //
 //  Created by jiran_daniel on 2023/06/07.
 //
-
 import AppKit
 import SQLite3
 
-@objc enum FDAStatus: Int {
-    case complete = 0
-    case noData
-    case none
-    case error
-}
-
-@objc enum AuthValueStatus: Int {
-    case denied = 0 // 액세스가 거부
+@objc enum FDAAuthValueStatus: Int {
+    case denied = 0 // 액세스가 거부 (실제 꺼져있을떄 응답값)
     case unDefined  // 알 수 없음
     case allowed    // 허용
     case restricted // 제한
-    case error
+    
+    case error = 97
     case DBError
     case noData
 }
 
-// JD(All), PF(PcFilter)
-@objcMembers
-class JDFDAUtil: NSObject {
+@objcMembers class JDFDAUtil: NSObject {
     static let shared = JDFDAUtil()
     private override init() {}
     
-    let TCCLoc = "/Library/Application Support/com.apple.TCC/TCC.db"
-    let FDA = "kTCCServiceSystemPolicyAllFiles"
+    private let TCCLoc = "/Library/Application Support/com.apple.TCC/TCC.db"
+    private let FDA = "kTCCServiceSystemPolicyAllFiles"
+    private let settingURL = URL(string: "x-apple.systempreferences:com.apple.preference.security?" + "Privacy_AllFiles")!
+    private let FDAType = "auth_value"
     
-    /**
-     TCC.db 에서 입력 받은 값 기준 조회
-     
-     - author:  Daniel Hwang
-     - date: 2023/06/07
-     - parameters: service: 조회할 TCC.db의 서비스명, identifierOrPath: 조회할 TCC.db의 bundle, path명
-     - returns: FDAStatus, errMsg
-     */
-    // (FDAStatus, String?, AuthValueStatus?)
-    func selectRowsForService(service: String, identifierOrPath: String?) -> AuthValueStatus {
-        guard identifierOrPath != nil else {
-            return (.error)
-        }
-        
-        var db: OpaquePointer?
-        
-        if sqlite3_open(TCCLoc, &db) == SQLITE_OK {
-            let query = "SELECT * FROM access WHERE service='\(service)' AND client='\(identifierOrPath!)';"
-            
-            var statement: OpaquePointer?
-            
-            if sqlite3_prepare_v2(db, query, -1, &statement, nil) == SQLITE_OK {
-                sqlite3_bind_text(statement, 1, (service as NSString).utf8String, -1, nil)
-                
-                while sqlite3_step(statement) == SQLITE_ROW {
-                    for column in 0..<sqlite3_column_count(statement) {
-                        if let columnName = sqlite3_column_name(statement, column) {
-                            let columnNameString = String(cString: columnName)
-                            
-                            if let columnValue = sqlite3_column_text(statement, column) {
-                                let columnValueString = String(cString: columnValue)
-                                
-                                if columnNameString == "auth_value" {
-                                    sqlite3_finalize(statement)
-                                    sqlite3_close(db)
-                                    
-                                    return (AuthValueStatus(rawValue: Int(columnValueString)!)!)
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            } else {
-                let errorMessage = String(cString: sqlite3_errmsg(db))
-                return (.DBError)
-            }
-            
-            sqlite3_finalize(statement)
-            sqlite3_close(db)
-            
-            return (.noData)
-        } else {
-            let errorMessage = String(cString: sqlite3_errmsg(db))
-            return (.DBError)
-        }
-    }
+    private let AccessAlertMessage = "시스템 접근권한 동의가 필요합니다."
+    private let noDataAlertMessage = "조회된 데이터가 없습니다."
+    private let wrongClientAlertMessage = "검색 값을 입력해 주세요."
+    private let DBErrorAlertMessage = "DB관련 오류입니다. 오류 내용을 확인해 주세요."
     
     /**
      권한상태 확인
@@ -98,28 +38,81 @@ class JDFDAUtil: NSObject {
      - author:  Daniel Hwang
      - date: 23/06/07
      - parameters: service: 조회할 TCC.db의 서비스명, identifierOrPath: 조회할 TCC.db의 bundle, path명
-     - returns: not defined
      */
-    func checkStatus(service: String, identifierOrPath: String?) {
-        let status = selectRowsForService(service: service, identifierOrPath: identifierOrPath)
+    func checkFDAStatusOfApp(from bundleID: String) {
+        var errMsg: String = ""
+        let status = selectFDAAuthValueFromService(bundleID: bundleID, errorMessage: &errMsg)
+        
+        print(status.rawValue)
         
         switch status {
-        case .allowed:
-            print("allowed")
         case .denied:
-            showAlert("시스템 접근권한 동의가 필요합니다.", isHandle: true)
-                
-            let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?" + "Privacy_AllFiles")!
-            NSWorkspace.shared.open(url)
-        case .restricted:
-            print("restricted")
-        case .unDefined:
-            print("unDefined")
+            showAlert(AccessAlertMessage) { response in
+                if response == .OK {
+                    NSWorkspace.shared.open(self.settingURL)
+                }
+            }
+        case .DBError:
+            showAlert(DBErrorAlertMessage)
+        case .error:
+            showAlert(wrongClientAlertMessage)
+        case .noData:
+            showAlert(noDataAlertMessage)
         default:
-            print("none")
+            print("status ::", status) // FDA 상태값
         }
         
+        return
+    }
+}
+
+// MARK: - Private Method
+extension JDFDAUtil {
+    /**
+     TCC.db 에서 값 조회
+     - discussion: Sqlite3
+     - author:  Daniel Hwang
+     - date: 2023/06/07
+     - parameters: service: 조회할 TCC.db의 서비스명, identifierOrPath: 조회할 TCC.db의 bundle, path명
+     - returns: AuthValueStatus, errorMessage
+     */
+    private func selectFDAAuthValueFromService(bundleID: String, errorMessage: inout String) -> FDAAuthValueStatus {
+        var autValue = ""
         
+        do {
+            try SQLiteBuilder(path: TCCLoc)
+                .prepare(with: "SELECT * FROM access WHERE service = '\(FDA)' AND client = '\(bundleID)';")
+                .execute(rowHandler: { statement, msg in
+                    guard let statement = statement else { return }
+                    
+                    for column in 0..<sqlite3_column_count(statement) {
+                        guard let columnName = sqlite3_column_name(statement, column) else { return }
+                        guard let columnValue = sqlite3_column_text(statement, column) else { return }
+                        
+                        if String(cString: columnName) == "auth_value" {
+                            autValue = String(cString: columnValue)
+                        }
+                    }
+                })
+                .closeDB()
+        } catch {
+            return .DBError
+        }
+        
+        guard let StringtoInt = Int(autValue) else { return .error }
+        return FDAAuthValueStatus(rawValue: StringtoInt)!
+    }
+    
+    /**
+     Close DB
+     
+     - author:  Daniel Hwang
+     - date: 23/06/12
+     - parameters: DB, Statement
+     */
+    private func close(_ DB: OpaquePointer?, And Statement: OpaquePointer?) {
+        sqlite3_finalize(Statement)
+        sqlite3_close(DB)
     }
     
     /**
@@ -127,14 +120,15 @@ class JDFDAUtil: NSObject {
      
      - author:  Daniel Hwang
      - date: 23/06/07
-     - parameters: text: 노출할 텍스트, style: Alert Style, isHandle: 핸들여부, completionHandler: 컴플리션핸들러
+     - parameters: message: 노출할 텍스트,  completionHandler: {}
      - returns: not defined
      */
-    func showAlert(_ text: String, isHandle: Bool = false) {
+    private func showAlert(_ message: String, completionHandler: ((NSApplication.ModalResponse) -> Void)? = nil) {
         let alert = NSAlert()
-        alert.messageText = text
+        alert.messageText = message
+        alert.informativeText = ""
         alert.addButton(withTitle: "confirm")
-        alert.alertStyle = .informational
+        alert.alertStyle = .warning
         
         let window = alert.window
         let screenFrame = NSScreen.main?.visibleFrame ?? NSZeroRect
@@ -144,10 +138,10 @@ class JDFDAUtil: NSObject {
         
         window.setFrameOrigin(NSPoint(x: centerX, y: centerY))
         
-//        if isHandle {
-//            alert.beginSheetModal(for: NSApplication.shared.windows.first!, completionHandler: completionHandler)
-//        }
+        let modalResponse = alert.runModal()
         
-        alert.runModal()
+        if modalResponse == .alertFirstButtonReturn {
+            completionHandler!(.OK)
+        }
     }
 }

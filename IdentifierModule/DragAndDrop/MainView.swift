@@ -51,6 +51,8 @@ class MainView: NSView {
         return textField
     }()
     
+    let testButton = NSButton()
+    
     var languages: [Language] = [.english, .korean]
     
     override init(frame frameRect: NSRect) {
@@ -80,8 +82,9 @@ class MainView: NSView {
         identifierDetailLabel.textColor = .white
         languageComboBox.isEditable = false
         textFieldInfoLabel.setText("path ::")
+        testButton.title = "test"
         
-        [dragView, identifierLabel, pathLabel, identifierDetailLabel, pathDetailLabel, fileInfoLabel, languageComboBox, textFieldInfoLabel, textFieldInfoLabel, searchTextField].forEach {
+        [dragView, identifierLabel, pathLabel, identifierDetailLabel, pathDetailLabel, fileInfoLabel, languageComboBox, textFieldInfoLabel, textFieldInfoLabel, searchTextField, testButton].forEach {
             self.addSubview($0)
         }
         
@@ -92,6 +95,11 @@ class MainView: NSView {
             make.right.equalToSuperview().offset(-20)
             make.width.equalTo(100)
             make.height.equalTo(40)
+        }
+        
+        testButton.snp.makeConstraints { make in
+            make.top.equalTo(languageComboBox.snp.bottom).offset(10)
+            make.left.equalTo(languageComboBox.snp.left)
         }
         
         dragView.snp.makeConstraints { make in
